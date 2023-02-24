@@ -12,38 +12,23 @@
                 </tr>
             </thead>
             <tbody v-for="product in products" :key="product.id">
-                <product-item-component :product="product" @addToCart="addToCart"/>
+                <product-item-component :product="product" />
             </tbody>
         </table>
     </ul>
     </div>
     
   </template>
-
+  
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
-    props: {
-        products:{
 
-        }
-    },
-    data () {
-        return {
-            cart:[]
-    }
-  },
-  methods: {
-    addToCart(product) {
-      const item = this.cart.find(item => item.product.name === product.name);
-      if (item) {
-        item.quantity++;
-        product.stock--;
-      } else {
-        this.cart.push({ product, quantity: 1 });
-        product.stock--;
-      }
+  computed:{
+    ...mapGetters({
+        products:"getProducts"
+    })
 
-      this.$emit('updateCart', this.cart)
-    }
     }}
 </script>
